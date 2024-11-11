@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translator</title>
+    <style>
+        /* General reset and base styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            padding-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            width: 100%;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 1rem 0 0.5rem;
+            color: #555;
+        }
+
+        select, textarea, button {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+        }
+
+        .results h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .results p {
+            background-color: #f1f1f1;
+            padding: 1rem;
+            border-radius: 4px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Language Translation</h1>
+    <div class="container">
+        <form action="/translate" method="POST">
+            <label for="source_lang">Select Source Language:</label>
+            <select name="source_lang" id="source_lang">
+                {% for pair in language_pairs %}
+                    <option value="{{ pair[0] }}" {% if pair[0] == source_lang %}selected{% endif %}>{{ pair[0] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="target_lang">Select Target Language:</label>
+            <select name="target_lang" id="target_lang">
+                {% for pair in language_pairs %}
+                    <option value="{{ pair[1] }}" {% if pair[1] == target_lang %}selected{% endif %}>{{ pair[1] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="text_to_translate">Enter Text to Translate:</label>
+            <textarea name="text_to_translate" id="text_to_translate" rows="4" cols="50">{{ original_text }}</textarea>
+
+            <button type="submit">Translate</button>
+        </form>
+
+        {% if translated_text %}
+        <div class="results">
+            <h3>Original Text ({{ source_lang }}):</h3>
+            <p>{{ original_text }}</p>
+            <h3>Translated Text ({{ target_lang }}):</h3>
+            <p>{{ translated_text }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

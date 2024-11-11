@@ -1,0 +1,16 @@
+required python version: Python 3.9.5
+
+python -m venv myenv
+
+myenv\Scripts\activate
+
+pip install -r requirements.txt
+
+python app.py
+
+go to http://127.0.0.1:5000/translate
+boomm!!!!!!!
+
+
+
+
